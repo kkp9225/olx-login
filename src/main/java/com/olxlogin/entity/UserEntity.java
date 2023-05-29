@@ -1,4 +1,4 @@
-package com.olxlogin.dto;
+package com.olxlogin.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,15 +7,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel(value = "This Model holds information about individual user")
-public class User {
-	
+@Entity
+@Table(name = "userinfo")
+public class UserEntity {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
+	@Column(name = "name")
 	@ApiModelProperty(value = "First name of user")
 	String firstname;
+	@Column(name = "sur_name")
 	@ApiModelProperty(value = "Last name of user")
 	String lastname;
 	@ApiModelProperty(value = "Username of user")
@@ -24,13 +28,23 @@ public class User {
 	String email;
 	@ApiModelProperty(value = "Phone.No of user")
 	String phone;
-	@ApiModelProperty(value = "Password")
-	String password;
 	String role;
+	String password;
 	
-	public User() {}
+	public UserEntity() {}
 	
-	public User(int id, String firstname, String lastname, String username, String email, String phone,
+	public UserEntity(String firstname, String lastname, String username, String email, String phone, String password, String role) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.email = email;
+		this.phone = phone;
+		this.password = password;
+		this.role = role;
+	}
+
+	public UserEntity(int id, String firstname, String lastname, String username, String email, String phone,
 			String password, String role) {
 		super();
 		this.id = id;
@@ -52,6 +66,12 @@ public class User {
 		this.role = role;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public int getId() {
 		return id;
 	}
@@ -89,18 +109,9 @@ public class User {
 		this.phone = phone;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
-				+ ", email=" + email + ", phone=" + phone + ", password=" + password + "]";
+		return "UserEntity [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
+				+ ", email=" + email + ", phone=" + phone + ", role=" + role + ", password=" + password + "]";
 	}
-	
 }
